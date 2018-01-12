@@ -569,11 +569,16 @@ export default class Scrollbars extends Component {
             })
         };
 
+        const viewProps = {
+            key: 'view',
+            viewProps.viewRef = ref => this.view = ref,
+            children,
+        }
+
         return createElement(tagName, { ...props, style: containerStyle, ref: (ref) => { this.container = ref; } }, [
             cloneElement(
                 renderView({ style: viewStyle }),
-                { key: 'view', ref: (ref) => { this.view = ref; } },
-                children
+                viewProps
             ),
             cloneElement(
                 renderTrackHorizontal({ style: trackHorizontalStyle }),
@@ -625,6 +630,7 @@ Scrollbars.propTypes = {
     universal: PropTypes.bool,
     style: PropTypes.object,
     children: PropTypes.node,
+    viewRef: PropTypes.func,
 };
 
 Scrollbars.defaultProps = {
